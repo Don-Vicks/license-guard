@@ -42,8 +42,9 @@ LicenseGuard is a robust, full-stack license management system designed to empow
 - Upload the Project to where you would like to host it
 - Run 'cp .env.example .env' In your Terminal/CMD or copy or rename .env.example to .env
 - Set up Mail by inputting your Credentials in the .env, also input your FLW_SECRET_KEY
-- Visit https://generate.plus/en/base64 and change the default from 16 to 44 to generate a string, copy the string and paste it in the .env APP_KEY after base64:
 - Create a Domain Based email of where you are hosting eg victor@teendev.dev
+- Next, we need to install the packages needed for this project, Install them by running 'composer install' (You need terminal access to run this command) Run this in the root directory
+- Run 'php artisan key:generate'
 - Visit url/admin and register an account using the email account, you would be prompted to verify your email address once that's done the account has admin access
 - Add a Cron Job to this URL(url/api/run/cronjob) Set this to run everytime(This is needed for Mailing)
 - Horray, Welcome to LicenseGuard start enjoying for free!
@@ -63,6 +64,9 @@ curl --location '127.0.0.1:8000/api/validate/license?domain=https%3A%2F%2Fteende
 
 ## Contributing
 We welcome contributions to LicenseGuard! Please refer to me for more information.
+
+## Support
+If for any reason you are unable to run those Terminal Command, reach out to me via X using the link below or send me a Email at victor@teendev.dev
 
 ## License
 This project is licensed under the MIT License.
