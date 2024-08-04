@@ -1,4 +1,4 @@
-#___ LicenseGuard: Your Comprehensive License Management Solution ___
+# LicenseGuard: Your Comprehensive License Management Solution
 
 ## Introduction
 LicenseGuard is a robust, full-stack license management system designed to empower software sellers by ensuring only verified and paid users have access to their software. It effectively combats software nulling and provides a comprehensive suite of features for both admins and users.
@@ -46,6 +46,7 @@ LicenseGuard is a robust, full-stack license management system designed to empow
 - Create a Domain Based email of where you are hosting eg victor@teendev.dev
 - Visit url/admin and register an account using the email account, you would be prompted to verify your email address once that's done the account has admin access
 - Add a Cron Job to this URL(url/api/run/cronjob) Set this to run everytime(This is needed for Mailing)
+- Horray, Welcome to LicenseGuard start enjoying for free!
 
 ## API Verification 
 To verify if a license is active or not, Make a get request to url/api/validate/license, the parameters should contain 'domain' => 'DOMAIN', license_key => 'THE LICENSE KEY TO VERIFY' if this is verified and active, you would receive a 200 Ok Status Code else a 401 Unauthorized Status Code
