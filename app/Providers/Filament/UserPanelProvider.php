@@ -34,12 +34,12 @@ class UserPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->passwordReset()
-            //->emailVerification()
+            ->emailVerification()
             ->colors([
                 'primary' => Color::Blue,
                 'secondary' => Color::Lime,
             ])
-            ->favicon('https://teendev.dev/wp-content/uploads/2023/04/Artboard-1.png')
+            //->favicon('https://teendev.dev/wp-content/uploads/2023/04/Artboard-1.png')
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
             ->pages([

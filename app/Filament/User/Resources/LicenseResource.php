@@ -58,7 +58,7 @@ class LicenseResource extends Resource
                     ->default(fn ($record) => $record ? $record->expiry_date : now()),
 
                 Hidden::make('active')
-                    ->default(fn ($record) => $record ? $record->active : false),
+                    ->default(fn ($record) => $record ? $record->active : 0),
                 
                 Toggle::make('active')->label('License Status, To activate you can make use of the Make Payment button')->disabled()
             ]);

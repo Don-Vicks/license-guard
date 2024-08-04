@@ -1,66 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#___ LicenseGuard: Your Comprehensive License Management Solution ___
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
+LicenseGuard is a robust, full-stack license management system designed to empower software sellers by ensuring only verified and paid users have access to their software. It effectively combats software nulling and provides a comprehensive suite of features for both admins and users.
 
-## About Laravel
+## Key Features
+ 
+ ### Admin Dashboard:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Manage registered users
+- Create and edit licenses
+- Define license types (prices, duration)
+- View payment history
+- Create new users
+- Access detailed statistics
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### User Dashboard:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Own multiple licenses
+- Create licenses as a reseller
+- Manage license activations
+- View payment status
+- Payment Integration:
 
-## Learning Laravel
+### Other Features
+- Seamless integration with Flutterwave for secure payments
+- Automated email notifications for payment confirmations and license activations
+ 
+### Subscription Model:
+- Flexible subscription options based on license types
+- Automated renewal reminders
+- License revocation for missed payments
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### API Integration:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Validate and authorize software users
+- Integrate license checks into your software
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Usage & Installation and Setup
+- Firstly Download or Clone this Project
+- Upload the Project to where you would like to host it
+- Run 'cp .env.example .env' In your Terminal/CMD or copy or rename .env.example to .env
+- Set up Mail by inputting your Credentials in the .env, also input your FLW_SECRET_KEY
+- Visit https://generate.plus/en/base64 and change the default from 16 to 44 to generate a string, copy the string and paste it in the .env APP_KEY after base64:
+- Create a Domain Based email of where you are hosting eg victor@teendev.dev
+- Visit url/admin and register an account using the email account, you would be prompted to verify your email address once that's done the account has admin access
+- Add a Cron Job to this URL(url/api/run/cronjob) Set this to run everytime(This is needed for Mailing)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## API Verification 
+To verify if a license is active or not, Make a get request to url/api/validate/license, the parameters should contain 'domain' => 'DOMAIN', license_key => 'THE LICENSE KEY TO VERIFY' if this is verified and active, you would receive a 200 Ok Status Code else a 401 Unauthorized Status Code
 
-### Premium Partners
+### Demo Request
+curl --location '127.0.0.1:8000/api/validate/license?domain=https%3A%2F%2Fteendev.dev&license_key=License_ZXzZ7U7UmLUFyNHN'
+200 Ok Response : {
+    "message": "Horray, Your activation has been confirmed"
+}
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+401 Unauthorized Response : {
+    "message": "Whoops, something isn\'t right, Kindly recheck the submitted details"
+}
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+We welcome contributions to LicenseGuard! Please refer to me for more information.
 
 ## License
+This project is licensed under the MIT License.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Author
+Don-Vicks (GitHub: https://github.com/Don-Vicks)
+VictorShallang (X: https://twitter.com/VictorShallang)

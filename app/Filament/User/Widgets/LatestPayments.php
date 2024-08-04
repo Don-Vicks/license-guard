@@ -15,7 +15,7 @@ class LatestPayments extends BaseWidget
         return $table
         ->description('Here are the last 10 payments you have made')
             ->query(
-                Payment::query()->where('user_id', auth()->user()->id)->take(10),
+                Payment::query()->where('user_id', auth()->user()->id)->latest()->take(10),
             )
             ->columns([
                 TextColumn::make('trx_ref'),

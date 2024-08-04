@@ -1,10 +1,11 @@
 <x-mail::message>
-# Introduction
+# License Update
 
-The body of your message.
+## Hello there,
+You have license (s) which expired today, kindly login to renew them in order to keep enjoying our services
 
-<x-mail::button :url="''">
-Button Text
+<x-mail::button :url="url('/user')">
+Login
 </x-mail::button>
 
 Thanks,<br>

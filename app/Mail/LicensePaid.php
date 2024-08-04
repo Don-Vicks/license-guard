@@ -21,7 +21,7 @@ class LicensePaid extends Mailable
      * Create a new message instance.
      *
      * @param $licenseUser
-     * @param $amount
+     * @param $amounMt
      * @param $value
      * @param $license
      */

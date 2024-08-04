@@ -43,7 +43,7 @@ class PaymentResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('trx_ref')->searchable(),
-                TextColumn::make('license.link')->label('License for'),
+                //TextColumn::make('license.link')->label('License for'),
                 TextColumn::make('info'),
                 TextColumn::make('amount')->prefix('NGN')->numeric(),
                 TextColumn::make('gateway')

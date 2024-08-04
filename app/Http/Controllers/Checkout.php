@@ -111,10 +111,10 @@ class Checkout extends Controller
                         'info' => 'Payment Successful for '.$license->name .' Activation/Renewal'
                     ]);
                     
-                    Mail::to($user)
-    ->queue(new LicensePaid(
-        $licenseUser, $amount, $value, $license
-    ));
+    //                 Mail::to($user)
+    // ->queue(new LicensePaid(
+    //     $licenseUser, $amount, $value, $license
+    // ));
                     return Redirect::to('/user');
                 }
                 
