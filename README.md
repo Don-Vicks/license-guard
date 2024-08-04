@@ -65,6 +65,8 @@ This Software uses Sqlite, thereby you do not need to configure anything else, a
 - Create a Domain Based email of where you are hosting eg victor@teendev.dev
 - Next, we need to install the packages needed for this project, Install them by running 'composer install' (You need terminal access to run this command) Run this in the root directory
 - Run 'php artisan key:generate'
+- Run 'npm install'
+- Run 'npm run build'
 - Visit url/admin and register an account using the email account, you would be prompted to verify your email address once that's done the account has admin access
 - Add a Cron Job to this URL(url/api/run/cronjob) Set this to run everytime(This is needed for Mailing)
 - Horray, Welcome to LicenseGuard start enjoying for free!
