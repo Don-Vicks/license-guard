@@ -13,25 +13,6 @@ use App\Mail\RenewLicense;
 class CronController extends Controller
 {
     public function job(){
-        $tables = [
-            'users',
-            'licenses',
-            'cache',
-            'cache_locks',
-            'jobs',
-            'failed_jobs',
-            'job_batches',
-            'license_type',
-            'migrations',
-            'sessions',
-            'payments',
-            'password_reset_tokens'
-            // Add all your table names here
-        ];
-
-        foreach ($tables as $table) {
-            DB::table($table)->truncate();
-        }
         $license = License::where('active', 1)->where('expiry_date', '<', now())->get();
           if($license){
             foreach ($license as $value) {
