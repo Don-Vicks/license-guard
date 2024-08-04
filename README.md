@@ -3,6 +3,24 @@
 ## Introduction
 LicenseGuard is a robust, full-stack license management system designed to empower software sellers by ensuring only verified and paid users have access to their software. It effectively combats software nulling and provides a comprehensive suite of features for both admins and users.
 
+## Requirements
+- PHP 8.3
+- PDO_sqlite
+- gd extension + laravel required extensions below
+- Ctype PHP Extension
+- cURL PHP Extension
+- DOM PHP Extension
+- Fileinfo PHP Extension
+- Filter PHP Extension
+- Hash PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PCRE PHP Extension
+- PDO PHP Extension
+- Session PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+
 ## Key Features
  
  ### Admin Dashboard:
@@ -41,7 +59,7 @@ LicenseGuard is a robust, full-stack license management system designed to empow
 - Firstly Download or Clone this Project
 - Upload the Project to where you would like to host it
 - Run 'cp .env.example .env' In your Terminal/CMD or copy or rename .env.example to .env
-- Set up Mail by inputting your Credentials in the .env, also input your FLW_SECRET_KEY
+- Set up Mail by inputting your Credentials in the .env, also input your FLW_SECRET_KEY, change APP_URL to your website URL, you can also replace the APP_NAME make sure you use double quotes
 - Create a Domain Based email of where you are hosting eg victor@teendev.dev
 - Next, we need to install the packages needed for this project, Install them by running 'composer install' (You need terminal access to run this command) Run this in the root directory
 - Run 'php artisan key:generate'
