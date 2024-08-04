@@ -3,6 +3,8 @@
 ## Introduction
 LicenseGuard is a robust, full-stack license management system designed to empower software sellers by ensuring only verified and paid users have access to their software. It effectively combats software nulling and provides a comprehensive suite of features for both admins and users.
 
+This Software uses Sqlite, thereby you do not need to configure anything else, apart from what is included in this File
+
 ## Requirements
 - PHP 8.3
 - PDO_sqlite
