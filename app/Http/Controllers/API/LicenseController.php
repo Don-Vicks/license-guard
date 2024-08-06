@@ -10,30 +10,41 @@ use Illuminate\Support\Facades\DB;
 
 class LicenseController extends Controller
 {
-    public function validate(Request $request){
+    public function validate(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'domain' => 'required', //'domain' => 'active_url|required',
+            'domain' => 'required',
             'license_key' => 'required|exists:licenses,key',
         ]);
 
         if ($validator->fails()) {
-            // You can customize the response when validation fails
-            return response()->json(['error' => $validator->errors()], 400);
+            $errors = $validator->errors();
+            $message = $errors->first('license_key') ?? $errors->first('domain');
+            return response()->json([
+                'status' => false,
+                'message' => $message,
+                'error' => $errors
+            ], 400);
         }
 
         $key = $request->license_key;
         $link = $request->domain;
         $check = DB::table('licenses')
-        ->where('key', $key)
-        ->where('link', $link)
-        ->where('active', 1)
-        ->first();
+            ->where('key', $key)
+            ->where('link', $link)
+            ->where('active', 1)
+            ->first();
 
-
-        if($check){
-            return response()->json(['message' => 'Horray, Your activation has been confirmed'], 200);
-        } else{
-            return response()->json(['message' => 'Whoops, something isn\'t right, Kindly recheck the submitted details'], 401);
+        if ($check) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Horray, Your activation has been confirmed'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Whoops, something isn\'t right, Kindly recheck your license or switch to a registered domain'
+            ], 401);
         }
     }
 }
