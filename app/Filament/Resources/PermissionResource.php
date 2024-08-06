@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Gate;
 
 class PermissionResource extends Resource
 {
@@ -24,7 +25,8 @@ class PermissionResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->label('Permission Name')
-                    ->required(),
+                    ->required()
+                    ->disabled(fn () => !Gate::allows('has-developer-privileges')),
             ]);
     }
 
@@ -38,10 +40,12 @@ class PermissionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->disabled(fn () => !Gate::allows('has-developer-privileges')),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->disabled(fn () => !Gate::allows('has-developer-privileges')),
             ]);
     }
 
