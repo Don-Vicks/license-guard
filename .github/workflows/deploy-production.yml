@@ -45,7 +45,6 @@ jobs:
           fi
           sed -i "s/APP_DEBUG=.*/APP_DEBUG=false/g" .env || echo "APP_DEBUG=false" >> .env
           sed -i "s/APP_ENV=.*/APP_ENV=production/g" .env || echo "APP_ENV=production" >> .env
-           sed -i "s/SESSION_DOMAIN=.*/SESSION_DOMAIN=${{ secrets.SESSION_DOMAIN }}/g" .env || echo "SESSION_DOMAIN=${{ secrets.SESSION_DOMAIN }}" >> .env
       - name: Install Dependencies & Build Project
         run: |
           npm install

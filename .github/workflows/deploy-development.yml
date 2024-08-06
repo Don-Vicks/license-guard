@@ -43,7 +43,7 @@ jobs:
             sed -i "s/DB_USERNAME=.*/DB_USERNAME=${{ secrets.DB_USERNAME }}/g" .env
             sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${{ secrets.DB_PASSWORD }}/g" .env
           fi
-          sed -i "s/SESSION_DOMAIN=.*/SESSION_DOMAIN=${{ secrets.DEV_SESSION_DOMAIN }}/g" .env || echo "SESSION_DOMAIN=${{ secrets.DEV_SESSION_DOMAIN }}" >> .env
+
       - name: Install Dependencies & Build Project
         run: |
           npm install
