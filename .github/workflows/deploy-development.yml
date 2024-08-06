@@ -1,0 +1,93 @@
+name: Development Deployment
+on:
+  push:
+    branches:
+      - development
+jobs:
+  deploy-cpanel:
+    name: Deploy to CPanel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+        with:
+          fetch-depth: 2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, zip, curl, pdo, pdo_mysql
+      - name: Install composer dependencies
+        run: composer install
+      - name: Setup Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Copy .env file
+        run: |
+          cp .env.example .env
+          sed -i 's/^# DB_HOST/DB_HOST/g' .env
+          sed -i 's/^# DB_PORT/DB_PORT/g' .env
+          sed -i 's/^# DB_DATABASE/DB_DATABASE/g' .env
+          sed -i 's/^# DB_USERNAME/DB_USERNAME/g' .env
+          sed -i 's/^# DB_PASSWORD/DB_PASSWORD/g' .env
+          sed -i "s|APP_URL=.*|APP_URL=${{ secrets.DEV_APP_URL }}|g" .env
+          sed -i "s|APP_NAME=.*|APP_NAME=\"${{ secrets.APP_NAME }}\"|g" .env
+          if [ "${{ secrets.DB_CONNECTION }}" = "sqlite" ]; then
+            sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=${{ secrets.DB_CONNECTION }}/g" .env
+          else
+            sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=${{ secrets.DB_CONNECTION }}/g" .env
+            sed -i "s/DB_HOST=.*/DB_HOST=${{ secrets.DB_HOST }}/g" .env
+            sed -i "s/DB_PORT=.*/DB_PORT=${{ secrets.DB_PORT }}/g" .env
+            sed -i "s/DB_DATABASE=.*/DB_DATABASE=${{ secrets.DEV_DB_DATABASE }}/g" .env
+            sed -i "s/DB_USERNAME=.*/DB_USERNAME=${{ secrets.DB_USERNAME }}/g" .env
+            sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${{ secrets.DB_PASSWORD }}/g" .env
+          fi
+
+      - name: Install Dependencies & Build Project
+        run: |
+          npm install
+          npm run build
+
+      - name: Generate Application Key & Cache Configuration
+        run: |
+          php artisan key:generate
+          php artisan config:cache
+      - name: Deploy to CPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          server-dir: dev.license.bereacafe.co.ke/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/tests/**
+            **/vendor/**
+
+
+  ssh-commands:
+    needs: deploy-cpanel
+    name: SSH Commands
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.modified, '.github/')"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run SSH commands
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            ls
+            cd dev.license.bereacafe.co.ke
+            composer install
+            php artisan migrate
+            php artisan optimize:clear
+            php artisan storage:link
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
+          pass: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
