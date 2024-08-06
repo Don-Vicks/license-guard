@@ -12,8 +12,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 
 class RoleResource extends Resource
 {
@@ -52,10 +53,36 @@ class RoleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->before(function ($record) {
+                        $currentUser = Auth::user();
+                        if ($currentUser->hasRole($record->name)) {
+                            Notification::make()
+                                ->title('Action Not Allowed')
+                                ->body('You cannot edit your own role.')
+                                ->danger()
+                                ->send();
+                            return false;
+                        }
+                        return true;
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->before(function ($records) {
+                        $currentUser = Auth::user();
+                        foreach ($records as $record) {
+                            if ($currentUser->hasRole($record->name)) {
+                                Notification::make()
+                                    ->title('Action Not Allowed')
+                                    ->body('You cannot delete your own role.')
+                                    ->danger()
+                                    ->send();
+                                return false;
+                            }
+                        }
+                        return true;
+                    }),
             ]);
     }
 
