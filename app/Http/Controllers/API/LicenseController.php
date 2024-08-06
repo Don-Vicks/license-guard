@@ -13,7 +13,7 @@ class LicenseController extends Controller
     public function validate(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'domain' => 'required',
+            'domain' => 'required|url',
             'license_key' => 'required|exists:licenses,key',
         ]);
 
