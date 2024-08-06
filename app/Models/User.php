@@ -54,17 +54,13 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
 
     public function canAccessPanel(Panel $panel): bool
     {
-        function getDomainName() {
-            // Use your preferred method to get the domain name
-            return $_SERVER['HTTP_HOST'];
-        }
-        
+
         if ($panel->getId() === 'admin') {
-            $domainName = getDomainName();
+            $domainName = $_SERVER['HTTP_HOST'];;
             return str_ends_with($this->email, '@' . $domainName) && $this->hasVerifiedEmail();
         }
-        
- 
+
+
         return true;
     }
 
