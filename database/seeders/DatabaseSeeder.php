@@ -18,11 +18,6 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         // Ensure roles are created before assigning them to users
         $this->call(RoleSeeder::class);
-        $user = User::factory()->create([
-            'name' => 'Sudo User',
-            'email' => 'sudo@gmail.com',
-        ]);
-        $user->assignRole('admin');
         // Create multiple license types with specific attributes
         foreach([[
             'name' => 'Basic Plan',
