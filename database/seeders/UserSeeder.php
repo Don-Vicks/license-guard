@@ -19,5 +19,11 @@ class UserSeeder extends Seeder
             'email' => 'sudo@gmail.com',
         ]);
         $user->assignRole('admin');
+
+        $user = User::factory()->create([
+            'name' => 'Normal User',
+            'email' => 'normal@gmail.com',
+        ]);
+        $user->assignRole('user');
     }
 }
