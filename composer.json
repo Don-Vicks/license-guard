@@ -13,6 +13,7 @@
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-permission": "^6.9",
         "swisnl/filament-backgrounds": "^1.1"
     },
     "require-dev": {
