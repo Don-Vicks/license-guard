@@ -20,7 +20,7 @@ class EnsureUserCanAccessDashboard
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Gate::allows('access-admin-dashboard')) {
+        if (!Gate::allows('access-admin-panel')) {
             return redirect('/user');
         }
 
