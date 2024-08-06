@@ -94,6 +94,9 @@ class Checkout extends Controller
                     case 'weekly':
                         $value = Carbon::now()->addWeek();
                         break;
+                    case 'enterprise':
+                        $value = Carbon::now()->addYears(2);
+                        break;
                     default:
                         $value = Carbon::now()->addDays(7);
                         break;
