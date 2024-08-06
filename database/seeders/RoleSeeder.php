@@ -20,6 +20,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'access-admin-panel']);
         Permission::create(['name' => 'edit-content']);
         Permission::create(['name' => 'view-content']);
+        Permission::create(['name' => 'has-developer-privileges']);
 
         $adminRole->givePermissionTo(['access-admin-panel', 'edit-content', 'view-content']);
         $editorRole->givePermissionTo(['edit-content', 'view-content']);
