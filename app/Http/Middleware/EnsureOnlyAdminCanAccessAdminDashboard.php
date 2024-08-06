@@ -1,6 +1,6 @@
 <?php
 
-// app/Http/Middleware/EnsureUserCanAccessDashboard.php
+// app/Http/Middleware/EnsureOnlyAdminCanAccessAdminDashboard.php
 
 namespace App\Http\Middleware;
 
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
 
-class EnsureUserCanAccessDashboard
+class EnsureOnlyAdminCanAccessAdminDashboard
 {
     /**
      * Handle an incoming request.

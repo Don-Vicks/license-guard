@@ -3,7 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Widgets\StatsOverview;
-use App\Http\Middleware\EnsureUserCanAccessDashboard;
+use App\Http\Middleware\EnsureOnlyAdminCanAccessAdminDashboard;
 use App\Http\Middleware\InstantiatePermissions;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -62,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 InstantiatePermissions::class,
-                EnsureUserCanAccessDashboard::class,
+                EnsureOnlyAdminCanAccessAdminDashboard::class,
             ])->plugins([
                 FilamentEditProfilePlugin::make()
                 ->setTitle('My Profile')
