@@ -32,9 +32,13 @@ class LicenseTypeResource extends Resource
                 TextInput::make('amount')->required()->numeric(),
                 Select::make('duration')->options([
                     'monthly' => 'Monthly',
-                    'quarter' => 'Three Months',
+                    'quarterly' => 'Three Months',
                     'bi-yearly' => '6 Months',
-                    'yearly' => 'Yearly'
+                    'yearly' => 'Yearly',
+                    'daily' => 'Daily',
+                    'weekly' => 'Weekly',
+                    'free-trial' => 'Free Trial',
+                    'enterprise' => 'Enterprise',
                 ])->required()->reactive(),
                 Toggle::make('status')->required()
             ]);
