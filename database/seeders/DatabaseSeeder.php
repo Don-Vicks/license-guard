@@ -17,7 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         // Ensure roles are created before assigning them to users
-        $this->call(RoleSeeder::class);
+        // Call the role and user seeders
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+        ]);
         // Create multiple license types with specific attributes
         foreach([[
             'name' => 'Basic Plan',
