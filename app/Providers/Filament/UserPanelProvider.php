@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\User\Widgets\UserOverview;
+use App\Http\Middleware\InstantiatePermissions;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -61,6 +62,7 @@ class UserPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                InstantiatePermissions::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
