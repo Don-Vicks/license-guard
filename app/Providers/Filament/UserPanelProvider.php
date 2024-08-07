@@ -7,6 +7,7 @@ use App\Http\Middleware\InstantiatePermissions;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Navigation\MenuItem;
 use Joaopaulolndev\FilamentEditProfile\Facades\FilamentEditProfile;
@@ -24,6 +25,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Illuminate\Support\Facades\Gate;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -77,12 +79,23 @@ class UserPanelProvider extends PanelProvider
                 FilamentBackgroundsPlugin::make(),
             ])
             ->userMenuItems([
+                'admin_panel' => MenuItem::make()
+                    ->label('Admin Panel')
+                    ->url('/admin')
+                    ->icon('heroicon-o-shield-check')
+                    ->visible(fn () => Gate::allows('access-admin-panel')),
                 'profile' => MenuItem::make()
                     ->label(fn() => auth()->user()->name)
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
                     //If you are using tenancy need to check with the visible method where ->company() is the relation between the user and tenancy model as you called
                     ->visible(),
+            ])->navigationItems([
+                NavigationItem::make()
+                    ->label('Admin Panel')
+                    ->url('/admin')
+                    ->icon('heroicon-o-shield-check')
+                    ->visible(fn () => auth()->user()->can('access-admin-panel')),
             ])
             ->spa();
     }
