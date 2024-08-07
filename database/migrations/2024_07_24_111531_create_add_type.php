@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('licenses', function (Blueprint $table) {
             $table->string('type_id')->nullable();
+
+            $table->foreign('type_id')->references('id')->on('license_type')->onDelete('cascade');
         });
     }
 
