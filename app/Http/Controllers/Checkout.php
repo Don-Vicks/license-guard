@@ -109,11 +109,15 @@ class Checkout extends Controller
 
                 Payment::create([
                     'user_id' => $user->id,
+                    'license_id' => $licenseUser->id,
                     'trx_ref' => Str::uuid(),
                     'gateway' => 'Flutterwave',
                     'amount' => $amount,
-                    'licensetype_id' => $license->id,
                     'info' => 'Payment Successful for ' . $license->name . ' Activation/Renewal'
+                ]);
+
+                $licenseUser->update([
+                    'type_id' => $licenseTypeId,
                 ]);
 
                 // Optionally send email notification
