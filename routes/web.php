@@ -12,12 +12,10 @@ Route::get('/', function () {
     if ($user) {
         if (Gate::allows('access-admin-panel')) {
             return redirect('/admin');
-        } else {
-            return redirect('/user');
         }
-    } else {
-        return redirect('/login'); // or wherever you want unauthenticated users to go
     }
+
+    return redirect('/user');
 });
 
 
