@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             $table->string('trx_ref')->nullable()->after('user_id');
-            $table->string('license_id')->nullable()->after('trx_ref');
+            $table->integer('license_id')->nullable()->after('trx_ref');
 
             $table->foreign('license_id')->references('id')->on('licenses')->onDelete('cascade');
         });

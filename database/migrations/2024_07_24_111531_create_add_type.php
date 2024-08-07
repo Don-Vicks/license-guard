@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('licenses', function (Blueprint $table) {
-            $table->string('type_id')->nullable();
+            $table->integer('type_id')->nullable();
 
             $table->foreign('type_id')->references('id')->on('license_type')->onDelete('cascade');
         });
