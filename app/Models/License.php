@@ -11,7 +11,9 @@ class License extends Model
         'user_id',
         'link',
         'expiry_date',
-        'key'
+        'key',
+        'number_of_accesses',
+        'last_access_at'
     ];
     use HasFactory;
 

@@ -17,6 +17,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -64,7 +65,10 @@ class LicenseResource extends Resource
                 TextColumn::make('key'),
                 TextColumn::make('link'),
                 TextColumn::make('expiry_date'),
-                ToggleColumn::make('active')
+                TextColumn::make('last_accessed_at'),
+                TextColumn::make('number_of_accesses'),
+                ToggleColumn::make('active'),
+                
             ])
             ->filters([
                 //
