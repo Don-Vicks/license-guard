@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->emailVerification()
             ->passwordReset()
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Blue, 'secondary' => Color::Green
             ])
             ->favicon('https://teendev.dev/wp-content/uploads/2023/04/Artboard-1.png')
             ->brandLogo('https://teendev.dev/wp-content/uploads/2023/04/Artboard-1.png')

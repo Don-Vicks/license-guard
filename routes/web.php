@@ -7,15 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 Route::get('/', function () {
-    $user = Auth::user();
-
-    if ($user) {
-        if (Gate::allows('access-admin-panel')) {
-            return redirect('/admin');
-        }
-    }
-
-    return redirect('/user');
+    /*
+     * Redirect to admin on / this will be guarded by a middleware when normal user logs in
+     */
+    return redirect('/admin');
 });
 
 

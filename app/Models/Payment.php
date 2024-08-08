@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\LicenseType;
@@ -9,6 +10,15 @@ use App\Models\LicenseType;
 class Payment extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'license_id',
+        'trx_ref',
+        'gateway',
+        'amount',
+        'info'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -22,8 +32,15 @@ class Payment extends Model
         return $this->belongsTo(License::class);
     }
 
-    public function type()
+    public static function filamentTableColumns()
     {
-        return $this->hasOneThrough(Payment::class, LicenseType::class, 'id', 'licensetype_id');
+        return [
+            TextColumn::make('user.name'),
+            TextColumn::make('license.type.name'),
+            TextColumn::make('license.key'),
+            TextColumn::make('amount'),
+            TextColumn::make('created_at'),
+
+        ];
     }
 }

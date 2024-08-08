@@ -23,12 +23,12 @@ class PaymentResource extends Resource
 
     public static function canEdit($record): bool
     {
-        return false; 
+        return false;
     }
 
     public static function canCreate(): bool
     {
-        return false; 
+        return false;
     }
 
     public static function form(Form $form): Form
@@ -45,7 +45,7 @@ class PaymentResource extends Resource
             ->columns([
                 TextColumn::make('trx_ref')->searchable(),
                 TextColumn::make('user.name')->sortable()->searchable(),
-                TextColumn::make('type.name')->label('License Type'),
+                TextColumn::make('license.type.name')->label('License Type'),
                 TextColumn::make('license.link')->label('License for'),
                 TextColumn::make('amount')->prefix('NGN')->numeric(),
                 TextColumn::make('gateway'),
