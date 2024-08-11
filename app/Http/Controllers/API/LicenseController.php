@@ -29,17 +29,29 @@ class LicenseController extends Controller
 
         $key = $request->license_key;
         $link = $request->domain;
-        $check = DB::table('licenses')
-            ->where('key', $key)
+        $check = License::where('key', $key)
             ->where('link', $link)
             ->where('active', 1)
             ->first();
+        
+        
+        
 
         if ($check) {
+            //update number of access times and last access as now
+            $number_of_accesses = $check->number_of_accesses+1;
+
+            $check->update(['number_of_accesses'=>$number_of_accesses, 'last_accessed_at'=>now()]);
+
+            $check->save();
+            
+
             return response()->json([
                 'status' => true,
                 'message' => 'Horray, Your activation has been confirmed'
             ], 200);
+
+           
         } else {
             return response()->json([
                 'status' => false,

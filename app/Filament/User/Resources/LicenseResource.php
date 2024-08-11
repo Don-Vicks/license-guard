@@ -73,6 +73,8 @@ class LicenseResource extends Resource
                 TextColumn::make('link')->searchable(),
                 TextColumn::make('key')->searchable(),
                 TextColumn::make('expiry_date'),
+                TextColumn::make('last_accessed_at')->label('You Lastly Accessed At'),
+                TextColumn::make('number_of_accesses')->label('Number Of Acesses '),
                 BooleanColumn::make('active')
             ])
             ->filters([

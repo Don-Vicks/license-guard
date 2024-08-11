@@ -11,19 +11,20 @@ class License extends Model
         'user_id',
         'link',
         'expiry_date',
-        'type_id',
-        'key'
+        'key',
+        'number_of_accesses',
+        'last_access_at'
     ];
     use HasFactory;
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class); 
     }
 
     public function type()
     {
-        return $this->belongsTo(LicenseType::class, 'type_id');
+        return $this->belongsTo(LicenseType::class); 
     }
-
+    
 }
