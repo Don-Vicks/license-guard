@@ -61,6 +61,7 @@ class LicenseController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => "Licensing API! Unexpected ERROR: " .$exception->getMessage(),
+                'error'  => $exception->getMessage(),
             ]);
         }
     }
