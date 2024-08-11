@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Filament\Widgets\NewPayments;
 use App\Filament\Widgets\NewUsers;
+use App\Filament\Widgets\PaymentsWidget;
 use App\Filament\Widgets\StatsOverview;
 use Filament\Pages\Page;
 
@@ -17,6 +18,7 @@ class Dashboard extends Page
     {
         return [
             StatsOverview::class,
+            PaymentsWidget::class,
             NewUsers::class,
             NewPayments::class,
         ];
