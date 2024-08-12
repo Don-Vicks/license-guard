@@ -33,25 +33,27 @@ class LicenseController extends Controller
             ->where('link', $link)
             ->where('active', 1)
             ->first();
-        
-        
-        
+
+
+
 
         if ($check) {
             //update number of access times and last access as now
             $number_of_accesses = $check->number_of_accesses+1;
+            $date = new \DateTime();
+            $date->modify('+2 hours');
 
-            $check->update(['number_of_accesses'=>$number_of_accesses, 'last_accessed_at'=>now()]);
+            $check->update(['number_of_accesses'=>$number_of_accesses, 'last_accessed_at'=> $date->format('Y-m-d H:i:s')]);
 
             $check->save();
-            
+
 
             return response()->json([
                 'status' => true,
                 'message' => 'Horray, Your activation has been confirmed'
             ], 200);
 
-           
+
         } else {
             return response()->json([
                 'status' => false,
