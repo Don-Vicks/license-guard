@@ -16,3 +16,4 @@ Route::get('/', function () {
 
 Route::get('checkout/{id}', [Checkout::class, 'checkout'])->name('checkout')->middleware('auth');
 Route::get('checkout/verify/confirm', [Checkout::class, 'verify'])->name('checkout.verify')->withoutMiddleware('web');
+Route::post('mpesa/callback', [Checkout::class, 'mpesaCallback'])->name('mpesa.callback');
