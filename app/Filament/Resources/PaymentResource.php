@@ -47,7 +47,7 @@ class PaymentResource extends Resource
                 TextColumn::make('user.name')->sortable()->searchable(),
                 TextColumn::make('license.type.name')->label('License Type'),
                 TextColumn::make('license.link')->label('License for'),
-                TextColumn::make('amount')->prefix('NGN')->numeric(),
+                TextColumn::make('amount')->prefix('KSH. ')->numeric(),
                 TextColumn::make('gateway'),
                 TextColumn::make('info'),
             ])

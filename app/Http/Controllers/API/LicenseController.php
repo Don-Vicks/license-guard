@@ -50,7 +50,6 @@ class LicenseController extends Controller
                     'message' => 'Horray, Your activation has been confirmed'
                 ], 200);
 
-
             } else {
                 return response()->json([
                     'status' => false,
