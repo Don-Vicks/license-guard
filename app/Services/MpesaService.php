@@ -28,7 +28,7 @@ class MpesaService
     }
 
 //    public function registerUrls(){
-//        $registerUrl=$this->mpesa->registerURL($this->businessCode)
+//        $registerUrl=$this->mpesa->registerURL($this->businessCode)n  
 //        ->responseType('Completed')
 //        ->validationUrl($this->businessCode)
 //        ->confirmationUrl($this->businessCode)
