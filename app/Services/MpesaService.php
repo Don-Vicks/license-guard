@@ -109,4 +109,47 @@ class MpesaService
             Log::error('error',[$exception]);
         }
     }
+
+    public function makeStkPayment(array $data): void
+    {
+        try {
+            $data_ = [
+                'amount' => $data['amount'],
+                'phoneNumber' => $data['phone_number'],
+                'transactionType' => 'CustomerPayBillOnline',
+                'accountReference' => 'accountReference',
+
+            ];
+            $response = $this->sendSTKPush($data_);
+            $transaction = MpesaTransaction::query()
+                ->create([
+                    'MerchantRequestID' => $response['response']['MerchantRequestID'],
+                    'CheckoutRequestID' => $response['response']['CheckoutRequestID'],
+                    'phone_number' => $data['phone_number'],
+                    'transaction_amount' => $data['amount'],
+                ]);
+
+            if ($transaction) {
+                Notification::make()
+                    ->success()
+                    ->title('MPESA PAYMENT SUCCESSFUL')
+                    ->body('STK Push sent. Please check your phone to complete your transaction.')
+                    ->send();
+            }
+            else {
+                Notification::make()
+                    ->warning()
+                    ->title('MPESA PAYMENT FAILED')
+                    ->body('Failed to initiate Transaction')
+                    ->send();
+            }
+        }
+        catch (\Exception $exception) {
+            Notification::make()
+                ->warning()
+                ->title('Server Error')
+                ->body('Error! ' . $exception->getMessage())
+                ->send();
+        }
+    }
 }
