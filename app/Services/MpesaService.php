@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\MpesaTransaction;
+use Filament\Notifications\Notification;
 use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 use Kemboielvis\MpesaSdkPhp\Mpesa;
@@ -50,11 +51,11 @@ class MpesaService
         $stkpush= $this->mpesa->stk()
             ->businessCode($this->businessCode)
             ->transactionType("CustomerOnlinePaybillOnline")
-            ->phoneNumber($data('phone_number'))
-            ->amount($data('amount'))
-            ->transactionDesc($data('transaction_desc'))
+            ->phoneNumber($data['phoneNumber'])
+            ->amount($data['amount'])
+            ->transactionDesc($data['transaction_desc'] ?? '')
             ->callBackUrl($this->callBackUrl)
-            ->accountReference($data('account_reference'))
+            ->accountReference($data['account_reference'] ?? '')
             ->passKey($this->passkey)
         ;
 
