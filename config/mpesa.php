@@ -74,7 +74,7 @@ return [
         |Mpesa Lipa Na Mpesa callback url
         |------------------------------------------
         */
-    'callback_url' => env('MPESA_CALLBACK_URL'),
+    'callback_url' => env('MPESA_CALLBACK_URL', 'http://localhost:8000/callback'),
 
     /*-----------------------------------------
         |Mpesa Transaction Status Result url
