@@ -11,15 +11,15 @@ class MpesaService
 {
 
     private Mpesa $mpesa;
-    private $passkey;
-    private $callBackUrl;
-    private $businessCode;
+    private string $passkey;
+    private string $callBackUrl;
+    private string $businessCode;
 
     public function __construct(){
         $this->mpesa = new Mpesa();
         $this->passkey = config('mpesa.passkey');
-        $this->callBackUrl = config('mpesa.callBackUrl');
-        $this->businessCode = config('mpesa.businessCode');
+        $this->callBackUrl = config('mpesa.callback_url');
+        $this->businessCode = config('mpesa.shortcode');
         $credentials =[
             'consumer_key' => config('mpesa.consumer_key'),
             'consumer_secret' => config('mpesa.consumer_secret'),
@@ -28,7 +28,7 @@ class MpesaService
     }
 
 //    public function registerUrls(){
-//        $registerUrl=$this->mpesa->registerURL($this->businessCode)n  
+//        $registerUrl=$this->mpesa->registerURL($this->businessCode)n
 //        ->responseType('Completed')
 //        ->validationUrl($this->businessCode)
 //        ->confirmationUrl($this->businessCode)
