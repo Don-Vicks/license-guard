@@ -54,7 +54,7 @@ class MpesaController extends Controller
 
     public function confirmation(Request $request){
         $transaction = MpesaTransaction::query()
-            ->where('phone_umber',$request->phoneNumber)
+            ->where('phone_number',$request->phoneNumber)
             ->where('transaction_amount',$request->amount)
             ->whereBetween('transaction_date',[Carbon::parse($request->dateTime),Carbon::parse($request->dateTime)->endOfMonth()])
             ->first();
