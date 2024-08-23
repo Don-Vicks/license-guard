@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\MpesaTransaction;
+use Filament\Notifications\Notification;
 use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 use Kemboielvis\MpesaSdkPhp\Mpesa;
@@ -11,15 +12,15 @@ class MpesaService
 {
 
     private Mpesa $mpesa;
-    private $passkey;
-    private $callBackUrl;
-    private $businessCode;
+    private string $passkey;
+    private string $callBackUrl;
+    private string $businessCode;
 
     public function __construct(){
         $this->mpesa = new Mpesa();
         $this->passkey = config('mpesa.passkey');
-        $this->callBackUrl = config('mpesa.callBackUrl');
-        $this->businessCode = config('mpesa.businessCode');
+        $this->callBackUrl = config('mpesa.callback_url');
+        $this->businessCode = config('mpesa.shortcode');
         $credentials =[
             'consumer_key' => config('mpesa.consumer_key'),
             'consumer_secret' => config('mpesa.consumer_secret'),
@@ -28,7 +29,7 @@ class MpesaService
     }
 
 //    public function registerUrls(){
-//        $registerUrl=$this->mpesa->registerURL($this->businessCode)n  
+//        $registerUrl=$this->mpesa->registerURL($this->businessCode)n
 //        ->responseType('Completed')
 //        ->validationUrl($this->businessCode)
 //        ->confirmationUrl($this->businessCode)
@@ -50,11 +51,11 @@ class MpesaService
         $stkpush= $this->mpesa->stk()
             ->businessCode($this->businessCode)
             ->transactionType("CustomerOnlinePaybillOnline")
-            ->phoneNumber($data('phone_number'))
-            ->amount($data('amount'))
-            ->transactionDesc($data('transaction_desc'))
+            ->phoneNumber($data['phoneNumber'])
+            ->amount($data['amount'])
+            ->transactionDesc($data['transaction_desc'] ?? '')
             ->callBackUrl($this->callBackUrl)
-            ->accountReference($data('account_reference'))
+            ->accountReference($data['account_reference'] ?? '')
             ->passKey($this->passkey)
         ;
 
@@ -107,6 +108,49 @@ class MpesaService
         catch (\Exception $exception){
             $exception->getMessage();
             Log::error('error',[$exception]);
+        }
+    }
+
+    public function makeStkPayment(array $data): void
+    {
+        try {
+            $data_ = [
+                'amount' => $data['amount'],
+                'phoneNumber' => $data['phone_number'],
+                'transactionType' => 'CustomerPayBillOnline',
+                'accountReference' => 'accountReference',
+
+            ];
+            $response = $this->sendSTKPush($data_);
+            $transaction = MpesaTransaction::query()
+                ->create([
+                    'MerchantRequestID' => $response['response']['MerchantRequestID'],
+                    'CheckoutRequestID' => $response['response']['CheckoutRequestID'],
+                    'phone_number' => $data['phone_number'],
+                    'transaction_amount' => $data['amount'],
+                ]);
+
+            if ($transaction) {
+                Notification::make()
+                    ->success()
+                    ->title('MPESA PAYMENT SUCCESSFUL')
+                    ->body('STK Push sent. Please check your phone to complete your transaction.')
+                    ->send();
+            }
+            else {
+                Notification::make()
+                    ->warning()
+                    ->title('MPESA PAYMENT FAILED')
+                    ->body('Failed to initiate Transaction')
+                    ->send();
+            }
+        }
+        catch (\Exception $exception) {
+            Notification::make()
+                ->warning()
+                ->title('Server Error')
+                ->body('Error! ' . $exception->getMessage())
+                ->send();
         }
     }
 }
