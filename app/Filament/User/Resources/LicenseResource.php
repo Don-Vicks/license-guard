@@ -39,13 +39,13 @@ class LicenseResource extends Resource
                     ->options(fn () => LicenseType::all()->pluck('name', 'id'))
                     ->searchable()
                     ->reactive(),
-                
+
                 TextInput::make('key')
                     ->label('License Key')
                     ->default('License_' . Str::random(16))
                     ->required()
                     ->readOnly(),
-                
+
                 TextInput::make('link')
                     ->required()
                     ->url()
@@ -59,7 +59,7 @@ class LicenseResource extends Resource
 
                 Hidden::make('active')
                     ->default(fn ($record) => $record ? $record->active : 0),
-                
+
                 Toggle::make('active')->label('License Status, To activate you can make use of the Make Payment button')->disabled()
             ]);
     }
@@ -69,7 +69,7 @@ class LicenseResource extends Resource
             ->columns([
                 TextColumn::make('type.name')->label('License Name'),
                 TextColumn::make('type.duration')->label('Billing Cycle'),
-                TextColumn::make('type.amount')->label('Billig Amount'),
+                TextColumn::make('type.amount')->label('Billing Amount'),
                 TextColumn::make('link')->searchable(),
                 TextColumn::make('key')->searchable(),
                 TextColumn::make('expiry_date'),

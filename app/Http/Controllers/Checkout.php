@@ -32,7 +32,7 @@ class Checkout extends Controller
         $data = [
             'tx_ref' => Str::random(16), // Unique transaction reference
             'amount' => $licenseType->amount,
-            'currency' => 'NGN',
+            'currency' => 'KSH. ',
             'redirect_url' => route('checkout.verify'),
             'meta' => [
                 'license_id' => $request->id,
