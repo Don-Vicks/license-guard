@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LicenseResource\Pages;
 use App\Filament\Resources\LicenseResource\RelationManagers;
+use App\Libraries\Core;
 use App\Models\License;
 use App\Models\LicenseType;
 use App\Models\User;
@@ -30,6 +31,12 @@ class LicenseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
+    protected $core;
+
+    public function __construct(Core $core)
+    {
+        $this->core = $core;
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -47,10 +54,17 @@ class LicenseResource extends Resource
                     return LicenseType::all()->pluck('name', 'id');
                 })
                 ->searchable()
-                ->reactive(),    
-                TextInput::make('key')->label('License Key')->default('License_' . Str::random(16))->required(),   
-                TextInput::make('link')->required()->url()->prefix('https://'),  
-                DatePicker::make('expiry_date')->required(),
+                ->reactive(),
+                TextInput::make('key')->label('License Key')->default('License_' . Str::random(16))->required(),
+                TextInput::make('link')->required()->url()->prefix('https://'),
+                TextInput::make('expiry_date')
+                    ->default(function ($state){
+                        $licenseType= $state['type_id']  ?? 'Default Value';
+                        return app(Core::class)->licenceDuration($licenseType);
+
+                    })
+                    ->disabled(),
+                //DatePicker::make('expiry_date')->required(),
                 Toggle::make('active')->required()
             ]);
     }
@@ -68,7 +82,7 @@ class LicenseResource extends Resource
                 TextColumn::make('last_accessed_at'),
                 TextColumn::make('number_of_accesses'),
                 ToggleColumn::make('active'),
-                
+
             ])
             ->filters([
                 //
