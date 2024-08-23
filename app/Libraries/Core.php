@@ -21,7 +21,7 @@ class Core
             case 'quarterly':
                 $value = Carbon::now()->addMonths(3);
                 break;
-            case 'bi-yearly':
+            case 'bi-annual':
                 $value = Carbon::now()->addMonths(6);
                 break;
             case 'yearly':
