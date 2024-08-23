@@ -63,7 +63,10 @@ class LicenseResource extends Resource
                         return app(Core::class)->licenceDuration($licenseType);
 
                     })
-                    ->disabled(),
+                    ->disabled()
+                    ->extraInputAttributes(['readonly'=>true])
+            ->required(),
+
                 //DatePicker::make('expiry_date')->required(),
                 Toggle::make('active')->required()
             ]);
