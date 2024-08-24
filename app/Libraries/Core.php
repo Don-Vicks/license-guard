@@ -15,32 +15,35 @@ class Core
     public static function licenceDuration(string $duration) : Carbon
     {
         switch ($duration){
-            case 'monthly':
+            case '1':
+            case '4':
                 $value = Carbon::now()->addMonth();
                 break;
-            case 'quarterly':
+            case '2':
                 $value = Carbon::now()->addMonths(3);
                 break;
-            case 'bi-annual':
+            case '3':
                 $value = Carbon::now()->addMonths(6);
                 break;
-            case 'yearly':
-            case 'annually':
+            case '5':
+            case '8':
                 $value = Carbon::now()->addYear();
                 break;
-            case 'daily':
+            case '6':
                 $value = Carbon::now()->addDay();
                 break;
-            case 'weekly':
+            case '7':
                 $value = Carbon::now()->addWeek();
                 break;
-            case 'enterprise':
+            case '9':
                 $value = Carbon::now()->addYears(2);
                 break;
             default:
                 $value = Carbon::now()->addDays(7);
                 break;
         }
+
         return $value;
+
     }
 }
