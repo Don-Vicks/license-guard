@@ -59,11 +59,11 @@ class LicenseResource extends Resource
                 TextInput::make('link')->required()->url()->prefix('https://'),
                 TextInput::make('expiry_date')
                     ->default(function ($state){
-                        $licenseType= $state['type_id']  ?? 'Default Value';
+                        $licenseType= $state['type_id']  ?? 'Basic Plan';
                         return app(Core::class)->licenceDuration($licenseType);
 
                     })
-                    ->disabled()
+                    ->readOnly()
                     ->extraInputAttributes(['readonly'=>true])
             ->required(),
 
