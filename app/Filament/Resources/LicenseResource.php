@@ -15,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -47,6 +48,7 @@ class LicenseResource extends Resource
                     return User::all()->pluck('name', 'id');
                 })
                 ->searchable()
+                    ->required()
                 ->reactive(),
                 Select::make('type_id')
                 ->label('License Type')
@@ -54,12 +56,19 @@ class LicenseResource extends Resource
                     return LicenseType::all()->pluck('name', 'id');
                 })
                 ->searchable()
-                ->reactive(),
+                    ->reactive()
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $licenseType=(string)$state;
+
+                        $expiryDate = app(Core::class)->licenceDuration($state);
+                        $set('expiry_date', $expiryDate->format('Y-m-d'));
+                    })
+                ->required(),
                 TextInput::make('key')->label('License Key')->default('License_' . Str::random(16))->required(),
                 TextInput::make('link')->required()->url()->prefix('https://'),
                 TextInput::make('expiry_date')
                     ->default(function ($state){
-                        $licenseType= $state['type_id']  ?? 'Basic Plan';
+                        $licenseType= $state['type_id']  ?? 'enterprise';
                         return app(Core::class)->licenceDuration($licenseType);
 
                     })
